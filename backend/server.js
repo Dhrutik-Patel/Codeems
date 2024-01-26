@@ -1,10 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
+import connectDB from './configuration/database.js';
 import products from './data/products.js';
 
 // Load env variables
 dotenv.config();
+
+// Connect to database
+connectDB();
 
 // Initialize express app
 const app = express();
