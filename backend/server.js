@@ -4,6 +4,7 @@ import colors from 'colors';
 
 import connectDB from './configuration/database.js';
 import productRoutes from './routes/productRoutes.js';
+import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
 // Load env variables
 dotenv.config();
@@ -16,6 +17,10 @@ const app = express();
 
 // Routes
 app.use('/api/products', productRoutes);
+
+// Error handling
+app.use(notFound);
+app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 3000;
