@@ -14,6 +14,7 @@ import App from './App';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
 import store from './store';
+import CartPage from './pages/CartPage';
 
 const routes = createBrowserRouter(
     createRoutesFromElements(
@@ -21,6 +22,8 @@ const routes = createBrowserRouter(
             <Route index={true} path='/' element={<HomePage />} />
 
             <Route path='/product/:id' element={<ProductPage />} />
+
+            <Route path='/cart' element={<CartPage />} />
 
             <Route path='*' element={<h1>Not Found</h1>} />
         </Route>
