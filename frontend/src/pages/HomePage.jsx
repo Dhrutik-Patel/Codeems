@@ -1,23 +1,21 @@
 import React from 'react';
-import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 import { Row, Col } from 'react-bootstrap';
+import { useGetProductsQuery } from '../slices/productsApiSlice';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const HomePage = () => {
-    const [products, setProducts] = React.useState([]);
+    const { data: products, isLoading, error } = useGetProductsQuery();
 
-    const fetchProducts = async () => {
-        try {
-            const { data } = await axios.get('/api/products');
-            setProducts(data);
-        } catch (error) {
-            console.log('\nERROR: ', error);
-        }
-    };
+    if (isLoading) return <Loader />;
 
-    React.useEffect(() => {
-        fetchProducts();
-    });
+    if (error)
+        return (
+            <Message variant='danger'>
+                {error.data?.message || error.error}
+            </Message>
+        );
 
     return (
         <>

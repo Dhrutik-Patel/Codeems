@@ -1,25 +1,28 @@
 import React from 'react';
-import axios from 'axios';
 import Rating from '../components/Rating';
 import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
+import { useGetProductByIdQuery } from '../slices/productsApiSlice';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const ProductPage = () => {
     const productID = useParams().id;
-    const [product, setProduct] = React.useState({});
 
-    const fetchProduct = async () => {
-        try {
-            const { data } = await axios.get(`/api/products/${productID}`);
-            setProduct(data);
-        } catch (error) {
-            console.log('\nERROR: ', error);
-        }
-    };
+    const {
+        data: product,
+        isLoading,
+        error,
+    } = useGetProductByIdQuery(productID);
 
-    React.useEffect(() => {
-        fetchProduct();
-    });
+    if (isLoading) return <Loader />;
+
+    if (error)
+        return (
+            <Message variant='danger'>
+                {error.data?.message || error.error}
+            </Message>
+        );
 
     return (
         <>
