@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 import { toast } from "react-toastify";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { login } from "../slices/authSlice";
-import { useGetOrdersQuery } from "../slices/orderApiSlice";
+import { useGetMyOrdersQuery } from "../slices/orderApiSlice";
 import { FaTimes } from "react-icons/fa";
 
 const ProfilePage = () => {
@@ -23,7 +23,7 @@ const ProfilePage = () => {
     data: orders,
     isLoading: loadingOrders,
     error: errorOrders,
-  } = useGetOrdersQuery();
+  } = useGetMyOrdersQuery();
 
   React.useEffect(() => {
     if (user) {

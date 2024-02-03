@@ -11,6 +11,7 @@ import {
   useGetOrderByIdQuery,
   useUpdateOrderToPaidMutation,
   useGetPaypalClientIdQuery,
+  useUpdateOrderToDeliveredMutation,
 } from "../slices/orderApiSlice";
 
 const OrderPage = () => {
@@ -27,6 +28,8 @@ const OrderPage = () => {
 
   const [deliverOrder, { isLoading: loadingDeliver }] =
     useAddOrderItemsMutation();
+
+  const [del, { isLoading: doLoding }] = useUpdateOrderToDeliveredMutation();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -97,7 +100,7 @@ const OrderPage = () => {
   }
 
   const deliverHandler = async () => {
-    await deliverOrder(orderId);
+    await del(orderId);
     refetch();
   };
 
@@ -239,9 +242,9 @@ const OrderPage = () => {
                 </ListGroup.Item>
               )}
 
-              {loadingDeliver && <Loader />}
+              {doLoding && <Loader />}
 
-              {user && user.isAdmin && order.isPaid && !order.isDelivered && (
+              {user && user.isAdmin && !order.isDelivered && (
                 <ListGroup.Item>
                   <Button
                     type='button'
