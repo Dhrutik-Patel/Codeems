@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './configuration/database.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
 // Load env variables
@@ -29,6 +30,14 @@ app.use(cookieParser());
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+
+// PayPal client ID
+app.get('/api/config/paypal', (req, res) => {
+    res.send({
+        clientId: process.env.PAYPAL_CLIENT_ID,
+    });
+});
 
 // Error handling
 app.use(notFound);
